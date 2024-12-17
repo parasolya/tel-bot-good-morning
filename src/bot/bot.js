@@ -2,9 +2,23 @@ import { Telegraf } from "telegraf";
 import generatePost from "../services/openaiService.js";
 import config from "../config/config.js";
 import scheduledJob from "./scheduler.js";
+import express from 'express';
 
 const bot = new Telegraf(config.TELEGRAM_TOKEN);
 console.log("Bot initialized.");
+
+// pings from UptimeRobot. 
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Bot is awake!");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 const topic =
   "Згенерувати мотивуюче ранкове повідомлення для співробітників з побажанням чудового настрою, продуктивного дня та досягнення робочих цілей українською мовою.";
